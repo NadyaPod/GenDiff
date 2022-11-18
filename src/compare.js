@@ -12,15 +12,12 @@ const loadJSON = (filePath) => {
   return JSON.parse(fs.readFileSync(filePath));
 };
 
-// Pretiry/ stringify
 const stringify = (diff) => {
   const strFormat = diff.map((item) => `  ${item[0]} ${item[1]}: ${item[2]}`);
   return `{\n${strFormat.join("\n")}\n}`;
 };
 
-export const genDiff = (filePath1, filePath2) => {
-  const minuend = loadJSON(filePath1);
-  const subtrahend = loadJSON(filePath2);
+const diff = (minuend, subtrahend) => {
   const diff = [];
 
   for (const [key, value] of Object.entries(minuend)) {
@@ -40,6 +37,12 @@ export const genDiff = (filePath1, filePath2) => {
       diff.push(["+", key, value]);
     }
   }
-  const sortedDiff = _.sortBy(diff, [(pair) => pair[1]]);
-  console.log(stringify(sortedDiff));
+  return _.sortBy(diff, [(pair) => pair[1]]);
+};
+
+export const getDiff = (filePath1, filePath2) => {
+  const minuend = loadJSON(filePath1);
+  const subtrahend = loadJSON(filePath2);
+  const strDiff = stringify(diff(minuend, subtrahend));
+  console.log(strDiff);
 };
