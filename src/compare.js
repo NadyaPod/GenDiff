@@ -1,6 +1,6 @@
 import fs from 'fs';
-import path from 'node:path/win32';
-import { cwd } from 'node:process';
+import path from 'path';
+import { cwd } from 'process';
 import _ from 'lodash';
 
 const minus = '-';
@@ -34,7 +34,7 @@ const diff = (minuend, subtrahend) => {
 
   for (const [key, value] of Object.entries(subtrahend)) {
     if (!Object.hasOwn(minuend, key)) {
-      difference.push(['+', key, value]);
+      difference.push([plus, key, value]);
     }
   }
   return _.sortBy(difference, [(pair) => pair[1]]);
