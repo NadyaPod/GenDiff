@@ -17,7 +17,7 @@ const stringify = (diff) => {
   return `{\n${strFormat.join('\n')}\n}`;
 };
 
-const diff = (minuend, subtrahend) => {
+export const diff = (minuend, subtrahend) => {
   const difference = [];
 
   /* eslint-disable-next-line */
