@@ -20,6 +20,7 @@ const stringify = (diff) => {
 const diff = (minuend, subtrahend) => {
   const difference = [];
 
+  /* eslint-disable-next-line */
   for (const [key, value] of Object.entries(minuend)) {
     if (Object.hasOwn(subtrahend, key)) {
       if (value === subtrahend[key]) {
@@ -32,6 +33,7 @@ const diff = (minuend, subtrahend) => {
     }
   }
 
+  /* eslint-disable-next-line */
   for (const [key, value] of Object.entries(subtrahend)) {
     if (!Object.hasOwn(minuend, key)) {
       difference.push([plus, key, value]);
