@@ -17,7 +17,7 @@ const stringify = (diff) => {
   return `{\n${strFormat.join('\n')}\n}`;
 };
 
-export const diff = (minuend, subtrahend) => {
+const diff = (minuend, subtrahend) => {
   const difference = [];
 
   /* eslint-disable-next-line */
@@ -45,6 +45,5 @@ export const diff = (minuend, subtrahend) => {
 export default (filePath1, filePath2) => {
   const minuend = loadJSON(filePath1);
   const subtrahend = loadJSON(filePath2);
-  const strDiff = stringify(diff(minuend, subtrahend));
-  console.log(strDiff);
+  return stringify(diff(minuend, subtrahend));
 };
