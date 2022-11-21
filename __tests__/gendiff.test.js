@@ -1,3 +1,4 @@
+/* eslint-disable-next-line */
 import { diff } from '../src/compare.js';
 
 test('diff', () => {
