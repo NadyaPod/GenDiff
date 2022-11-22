@@ -19,31 +19,47 @@ const stringify = (diff) => {
 
 const diff = (minuend, subtrahend) => {
   const difference = [];
+  const keys1 = Object.keys(minuend);
+  const keys2 = Object.keys(subtrahend);
+  const keys = _.union(keys1, keys2);
 
-  /* eslint-disable-next-line */
-  for (const [key, value] of Object.entries(minuend)) {
-    if (Object.hasOwn(subtrahend, key)) {
-      if (value === subtrahend[key]) {
-        difference.push([eq, key, value]);
-      } else {
-        difference.push([minus, key, value], [plus, key, subtrahend[key]]);
-      }
-    } else {
-      difference.push([minus, key, value]);
-    }
-  }
-
-  /* eslint-disable-next-line */
-  for (const [key, value] of Object.entries(subtrahend)) {
+  keys.forEach((key) => {
     if (!Object.hasOwn(minuend, key)) {
-      difference.push([plus, key, value]);
+      difference.push([plus, key, subtrahend[key]]);
+    } else if (!Object.hasOwn(subtrahend, key)) {
+      difference.push([minus, key, minuend[key]]);
+    } else if (minuend[key] !== subtrahend[key]) {
+      difference.push([minus, key, minuend[key]], [plus, key, subtrahend[key]]);
+    } else {
+      difference.push([eq, key, minuend[key]]);
     }
-  }
+  });
+
+  // /* eslint-disable-next-line */
+  // for (const [key, value] of Object.entries(minuend)) {
+  //   if (Object.hasOwn(subtrahend, key)) {
+  //     if (value === subtrahend[key]) {
+  //       difference.push([eq, key, value]);
+  //     } else {
+  //       difference.push([minus, key, value], [plus, key, subtrahend[key]]);
+  //     }
+  //   } else {
+  //     difference.push([minus, key, value]);
+  //   }
+  // }
+
+  // /* eslint-disable-next-line */
+  // for (const [key, value] of Object.entries(subtrahend)) {
+  //   if (!Object.hasOwn(minuend, key)) {
+  //     difference.push([plus, key, value]);
+  //   }
+  // }
   return _.sortBy(difference, [(pair) => pair[1]]);
 };
 
 export default (filePath1, filePath2) => {
   const minuend = loadJSON(filePath1);
   const subtrahend = loadJSON(filePath2);
+  console.log('hfhgf', stringify(diff(minuend, subtrahend)));
   return stringify(diff(minuend, subtrahend));
 };
