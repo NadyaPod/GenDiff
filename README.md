@@ -7,4 +7,5 @@
 ### Test Coverage:
 [![Test Coverage](https://api.codeclimate.com/v1/badges/7df43570f95a790d1cfb/test_coverage)](https://codeclimate.com/github/NadyaPod/frontend-project-46/test_coverage)
 
+### Node CI:
 [![Node CI](https://github.com/NadyaPod/frontend-project-46/actions/workflows/nodejs.yml/badge.svg)](https://github.com/NadyaPod/frontend-project-46/actions/workflows/nodejs.yml)
