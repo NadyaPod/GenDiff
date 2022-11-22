@@ -24,9 +24,9 @@ const diff = (minuend, subtrahend) => {
   const keys = _.union(keys1, keys2);
 
   keys.forEach((key) => {
-    if (!Object.hasOwn(minuend, key)) {
+    if (!_.has(minuend, key)) {
       difference.push([plus, key, subtrahend[key]]);
-    } else if (!Object.hasOwn(subtrahend, key)) {
+    } else if (!_.has(subtrahend, key)) {
       difference.push([minus, key, minuend[key]]);
     } else if (minuend[key] !== subtrahend[key]) {
       difference.push([minus, key, minuend[key]], [plus, key, subtrahend[key]]);
@@ -60,6 +60,5 @@ const diff = (minuend, subtrahend) => {
 export default (filePath1, filePath2) => {
   const minuend = loadJSON(filePath1);
   const subtrahend = loadJSON(filePath2);
-  console.log('hfhgf', stringify(diff(minuend, subtrahend)));
   return stringify(diff(minuend, subtrahend));
 };
