@@ -1,15 +1,26 @@
-import fs from 'fs';
+import { readFileSync } from 'fs';
 import path from 'path';
 import { cwd } from 'process';
 import _ from 'lodash';
+import parser from './parsers.js';
 
 const minus = '-';
 const plus = '+';
 const eq = ' ';
 
-const loadJSON = (filePath) => {
-  const fullPath = path.resolve(cwd(), filePath);
-  return JSON.parse(fs.readFileSync(fullPath));
+const getFullPath = (filePath) => path.resolve(cwd(), filePath);
+
+const getFileData = (filePath) => {
+  try {
+    return readFileSync(getFullPath(filePath), 'utf-8');
+  } catch {
+    throw new Error('Sorry, can\'t find the file');
+  }
+};
+
+const getFileType = (filePath) => {
+  const extension = path.extname(filePath);
+  return extension.slice(1);
 };
 
 const stringify = (diff) => {
@@ -58,7 +69,13 @@ const diff = (minuend, subtrahend) => {
 };
 
 export default (filePath1, filePath2) => {
-  const minuend = loadJSON(filePath1);
-  const subtrahend = loadJSON(filePath2);
-  return stringify(diff(minuend, subtrahend));
+  const minuend = getFileData(filePath1);
+  const minuendExt = getFileType(getFullPath(filePath1));
+  const minuendParsed = parser(minuend, minuendExt);
+  console.log(minuendExt);
+  const subtrahend = getFileData(filePath2);
+  const subtrahendExt = getFileType(getFullPath(filePath2));
+  const subtrahendParsed = parser(subtrahend, subtrahendExt);
+  console.log(subtrahendExt);
+  return stringify(diff(minuendParsed, subtrahendParsed));
 };
