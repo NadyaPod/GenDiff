@@ -24,11 +24,6 @@ const getFileType = (filePath) => {
   return extension.slice(1);
 };
 
-// const stringify = (diff) => {
-//   const strFormat = diff.map((item) => `  ${item[0]} ${item[1]}: ${item[2]}`);
-//   return `{\n${strFormat.join('\n')}\n}`;
-// };
-
 export const diff = (minuend, subtrahend) => {
   const difference = [];
   const keys1 = Object.keys(minuend);
