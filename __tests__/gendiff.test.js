@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import fs from 'fs';
-
+import { diff } from '../src/compare.js';
 import generateDiff from '../src/compare.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -33,5 +33,15 @@ test('json and yaml', () => {
   const file2Path = getFixturePath('file2.yaml');
   const actual = generateDiff(file1Path, file2Path);
 
+  expect(actual).toEqual(expected);
+});
+
+test('json no plain', () => {
+  const expected = readFixture('expectedNP.txt');
+  const file1Path = getFixturePath('file1NP.json');
+  const file2Path = getFixturePath('file2NP.json');
+  const actual = generateDiff(file1Path, file2Path);
+
+  console.log(actual);
   expect(actual).toEqual(expected);
 });
