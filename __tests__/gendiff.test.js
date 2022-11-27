@@ -37,8 +37,17 @@ test('json and yaml', () => {
 
 test('json no plain', () => {
   const expected = readFixture('expectedNP.txt');
-  const file1Path = getFixturePath('file1NP.json');
-  const file2Path = getFixturePath('file2NP.json');
+  const file1Path = getFixturePath('file3.json');
+  const file2Path = getFixturePath('file4.json');
+  const actual = generateDiff(file1Path, file2Path);
+
+  expect(actual).toEqual(expected);
+});
+
+test('yaml no plain', () => {
+  const expected = readFixture('expectedNP.txt');
+  const file1Path = getFixturePath('file3.yaml');
+  const file2Path = getFixturePath('file4.yml');
   const actual = generateDiff(file1Path, file2Path);
 
   expect(actual).toEqual(expected);
