@@ -3,11 +3,10 @@ import path from 'path';
 import { cwd } from 'process';
 import _ from 'lodash';
 import parser from './parsers.js';
-import stringify from './formatter.js';
-
-const minus = '-';
-const plus = '+';
-const eq = ' ';
+import getFormatter from '../formatters/index.js';
+import {
+  plus, minus, eq, upd,
+} from './symbols.js';
 
 const getFullPath = (filePath) => path.resolve(cwd(), filePath);
 
@@ -32,24 +31,24 @@ export const diff = (minuend, subtrahend) => {
 
   keys.forEach((key) => {
     if (!_.has(minuend, key)) {
-      difference.push([plus, key, subtrahend[key]]);
+      difference.push([plus, key, subtrahend[key], undefined]);
     } else if (!_.has(subtrahend, key)) {
-      difference.push([minus, key, minuend[key]]);
+      difference.push([minus, key, minuend[key], undefined]);
     } else if (minuend[key] !== subtrahend[key]) {
       if (_.isObject(minuend[key]) && _.isObject(subtrahend[key])) {
         const child = diff(minuend[key], subtrahend[key]);
-        difference.push([eq, key, child]);
+        difference.push([eq, key, child, undefined]);
       } else {
-        difference.push([minus, key, minuend[key]], [plus, key, subtrahend[key]]);
+        difference.push([upd, key, minuend[key], subtrahend[key]]);
       }
     } else {
-      difference.push([eq, key, minuend[key]]);
+      difference.push([eq, key, minuend[key], undefined]);
     }
   });
   return difference;
 };
 
-export default (filePath1, filePath2) => {
+export default (filePath1, filePath2, format) => {
   const minuend = getFileData(filePath1);
   const minuendExt = getFileType(getFullPath(filePath1));
   const minuendParsed = parser(minuend, minuendExt);
@@ -57,5 +56,6 @@ export default (filePath1, filePath2) => {
   const subtrahend = getFileData(filePath2);
   const subtrahendExt = getFileType(getFullPath(filePath2));
   const subtrahendParsed = parser(subtrahend, subtrahendExt);
-  return stringify(diff(minuendParsed, subtrahendParsed));
+  const formatter = getFormatter(format);
+  return formatter(diff(minuendParsed, subtrahendParsed));
 };

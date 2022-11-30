@@ -12,7 +12,7 @@ test('json', () => {
   const expected = readFixture('expected.txt');
   const file1Path = getFixturePath('file1.json');
   const file2Path = getFixturePath('file2.json');
-  const actual = generateDiff(file1Path, file2Path);
+  const actual = generateDiff(file1Path, file2Path, 'stylish');
 
   expect(actual).toEqual(expected);
 });
@@ -21,7 +21,7 @@ test('yaml', () => {
   const expected = readFixture('expected.txt');
   const file1Path = getFixturePath('file1.yml');
   const file2Path = getFixturePath('file2.yaml');
-  const actual = generateDiff(file1Path, file2Path);
+  const actual = generateDiff(file1Path, file2Path, 'stylish');
 
   expect(actual).toEqual(expected);
 });
@@ -30,7 +30,7 @@ test('json and yaml', () => {
   const expected = readFixture('expected.txt');
   const file1Path = getFixturePath('file1.json');
   const file2Path = getFixturePath('file2.yaml');
-  const actual = generateDiff(file1Path, file2Path);
+  const actual = generateDiff(file1Path, file2Path, 'stylish');
 
   expect(actual).toEqual(expected);
 });
@@ -39,7 +39,7 @@ test('json no plain', () => {
   const expected = readFixture('expectedNP.txt');
   const file1Path = getFixturePath('file3.json');
   const file2Path = getFixturePath('file4.json');
-  const actual = generateDiff(file1Path, file2Path);
+  const actual = generateDiff(file1Path, file2Path, 'stylish');
 
   expect(actual).toEqual(expected);
 });
@@ -48,7 +48,16 @@ test('yaml no plain', () => {
   const expected = readFixture('expectedNP.txt');
   const file1Path = getFixturePath('file3.yaml');
   const file2Path = getFixturePath('file4.yml');
-  const actual = generateDiff(file1Path, file2Path);
+  const actual = generateDiff(file1Path, file2Path, 'stylish');
+
+  expect(actual).toEqual(expected);
+});
+
+test('json plain formatter', () => {
+  const expected = readFixture('expectedPlain.txt');
+  const file1Path = getFixturePath('file3.json');
+  const file2Path = getFixturePath('file4.json');
+  const actual = generateDiff(file1Path, file2Path, 'plain');
 
   expect(actual).toEqual(expected);
 });
