@@ -9,7 +9,6 @@ export default (file, type) => {
     case 'yml':
       return yaml.load(file);
     default:
-      console.log(type);
-      return `Not support ${type}`;
+      throw new Error(`Sorry, wrong formatter: ${type}`);
   }
 };

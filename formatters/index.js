@@ -11,7 +11,7 @@ const getFormatter = (format) => {
     case 'json':
       return json;
     default:
-      throw new Error(`Sorry, cant support ${format}`);
+      throw new Error(`Sorry, cant support '${format}'`);
   }
 };
 
