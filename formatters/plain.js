@@ -10,31 +10,23 @@ const valueFormatter = (value) => {
     return null;
   }
   return `${value}`;
-  // switch (typeof value) {
-  //   case ('object'): {
-  //     return '[complex value]';
-  //   }
-  //   case ('string'): {
-  //     return `'${value}'`;
-  //   }
-  //   default:
-  //     return value;
-  // }
 };
 
 const strBuilder = (data) => {
-  const result = [];
-  data.forEach(([sym, key, value, maybeValue]) => {
+  const result = data.map(([sym, key, value, maybeValue]) => {
     if (sym === plus) {
-      result.push(`Property '${key}' was added with value: ${value}`);
-    } else if (sym === minus) {
-      result.push(`Property '${key}' was removed`);
-    } else if (sym === upd) {
-      const updValue = maybeValue;
-      result.push(`Property '${key}' was updated. From ${value} to ${updValue}`);
+      return (`Property '${key}' was added with value: ${value}`);
     }
+    if (sym === minus) {
+      return (`Property '${key}' was removed`);
+    }
+    if (sym === upd) {
+      const updValue = maybeValue;
+      return `Property '${key}' was updated. From ${value} to ${updValue}`;
+    }
+    return null;
   });
-  return result.join('\n');
+  return result.filter((item) => item !== null).join('\n');
 };
 
 const generateKeyValueData = (data, base = '') => {
