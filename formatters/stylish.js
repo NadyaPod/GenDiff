@@ -18,7 +18,6 @@ const unpack = (data) => {
 };
 
 const stylish = (packedData, replacer = ' ', spacesCount = 4, depth = 0) => {
-  console.dir(packedData, { depth: null });
   const data = unpack(packedData);
   const result = [];
 
