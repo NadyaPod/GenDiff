@@ -29,7 +29,7 @@ const valueFormatter = (value) => {
 const generateKeyValueData = (data, base = '') => {
   const result = data.flatMap(([sym, key, value, maybeValue]) => {
     const complexKey = base === '' ? `${key}` : `${base}.${key}`;
-    if (_.isObject(value) && !Array.isArray(value)) {
+    if (_.isObject(value) && !Array.isArray(value) && value !== null) {
       return [sym, complexKey, '[complex value]', `${valueFormatter(maybeValue)}`];
     }
     if (!_.isObject(value) && !Array.isArray(value)) {
