@@ -1,6 +1,27 @@
 import _ from 'lodash';
 import { plus, minus, upd } from '../src/symbols.js';
 
+const valueFormatter = (value) => {
+  if (typeof value === 'object' && value !== null) {
+    return '[complex value]';
+  } if (typeof value === 'string') {
+    return `'${value}'`;
+  } if (value === null) {
+    return null;
+  }
+  return `${value}`;
+  // switch (typeof value) {
+  //   case ('object'): {
+  //     return '[complex value]';
+  //   }
+  //   case ('string'): {
+  //     return `'${value}'`;
+  //   }
+  //   default:
+  //     return value;
+  // }
+};
+
 const strBuilder = (data) => {
   const result = [];
   data.forEach(([sym, key, value, maybeValue]) => {
@@ -10,20 +31,11 @@ const strBuilder = (data) => {
       result.push(`Property '${key}' was removed`);
     } else if (sym === upd) {
       const updValue = maybeValue;
+      console.log(maybeValue);
       result.push(`Property '${key}' was updated. From ${value} to ${updValue}`);
     }
   });
   return result.join('\n');
-};
-
-const valueFormatter = (value) => {
-  switch (typeof value) {
-    case ('string'): {
-      return `'${value}'`;
-    }
-    default:
-      return value;
-  }
 };
 
 const generateKeyValueData = (data, base = '') => {
