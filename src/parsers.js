@@ -9,6 +9,7 @@ export default (file, type) => {
     case 'yml':
       return yaml.load(file);
     default:
-      return 'Not support this format';
+      console.log(type);
+      return `Not support ${type}`;
   }
 };
