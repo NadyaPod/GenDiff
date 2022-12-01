@@ -63,7 +63,7 @@ test('json plain formatter', () => {
 });
 
 test('json formatter', () => {
-  const expected = readFixture('expectedNPJson.txt');
+  const expected = readFixture('expectedFormatterJSON.txt');
   const file1Path = getFixturePath('file3.json');
   const file2Path = getFixturePath('file4.json');
   const actual = generateDiff(file1Path, file2Path, 'json');
