@@ -1,4 +1,3 @@
-export default (data) => {
-  console.log(data);
-  return JSON.stringify(data);
-};
+import stylish from './stylish.js';
+
+export default (data) => JSON.stringify(stylish(data));
