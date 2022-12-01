@@ -14,17 +14,16 @@ const valueFormatter = (value) => {
 
 const strBuilder = (data) => {
   const result = data.map(([sym, key, value, maybeValue]) => {
-    if (sym === plus) {
-      return (`Property '${key}' was added with value: ${value}`);
+    switch (sym) {
+      case (plus):
+        return (`Property '${key}' was added with value: ${value}`);
+      case (minus):
+        return (`Property '${key}' was removed`);
+      case (upd):
+        return `Property '${key}' was updated. From ${value} to ${maybeValue}`;
+      default:
+        return null;
     }
-    if (sym === minus) {
-      return (`Property '${key}' was removed`);
-    }
-    if (sym === upd) {
-      const updValue = maybeValue;
-      return `Property '${key}' was updated. From ${value} to ${updValue}`;
-    }
-    return null;
   });
   return result.filter((item) => item !== null).join('\n');
 };
