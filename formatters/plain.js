@@ -1,37 +1,6 @@
 import _ from 'lodash';
 import { plus, minus, upd } from '../src/symbols.js';
 
-// const plain = (data, base = '') => {
-//   const result = [];
-//   console.dir(data, { depth: null });
-//   if (Array.isArray(data)) {
-//     data.forEach(([sym, key, value]) => {
-//       console.log('key', key);
-//       // console.log('sym', sym, 'key', key, 'value', value);
-//       const complexKey = base === '' ? `${key}` : `${base}.${key}`;
-//       console.log('complexKey', complexKey);
-//       if (sym === '+') {
-//         if (!_.isObject(value)) {
-//           result.push(`Property '${complexKey}' was added with value: '${value}'`);
-//         } else {
-//           result.push(`${plain(value, complexKey)}`);
-//         }
-//       } else if (sym === '-') {
-//         if (!_.isObject(value)) {
-//           result.push(`Property '${complexKey}' was removed`);
-//         }
-//       } else {
-//         result.push(`${plain(value, complexKey)}`);
-//       }
-//     });
-//   } else if (_.isObject(data)) {
-//     return '[complex value]';
-//   } else {
-//     return `'${data}'`;
-//   }
-//   return result.join('\n');
-// };
-
 const strBuilder = (data) => {
   const result = [];
   data.forEach(([sym, key, value, maybeValue]) => {
