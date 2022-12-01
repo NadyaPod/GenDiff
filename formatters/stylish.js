@@ -17,17 +17,13 @@ const unpack = (data) => {
 };
 
 const stylish = (packedData, replacer = ' ', spacesCount = 4, depth = 0) => {
-  const result = [];
+  let result = [];
   const data = unpack(packedData);
 
   if (Array.isArray(data)) {
-    data.forEach(([sym, key, value]) => {
-      result.push(`${replacer.repeat(spacesCount * depth)}  ${sym} ${key}: ${stylish(value, replacer, spacesCount, depth + 1)}`);
-    });
+    result = data.map(([sym, key, value]) => `${replacer.repeat(spacesCount * depth)}  ${sym} ${key}: ${stylish(value, replacer, spacesCount, depth + 1)}`);
   } else if (_.isObject(data)) {
-    Object.entries(data).forEach(([key, value]) => {
-      result.push(`${replacer.repeat(spacesCount * (depth + 1))}${key}: ${stylish(value, replacer, spacesCount, depth + 1)}`);
-    });
+    result = Object.entries(data).map(([key, value]) => `${replacer.repeat(spacesCount * (depth + 1))}${key}: ${stylish(value, replacer, spacesCount, depth + 1)}`);
   } else {
     return `${data}`;
   }
