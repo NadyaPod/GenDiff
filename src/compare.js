@@ -48,7 +48,7 @@ export const diff = (minuend, subtrahend) => {
   return difference;
 };
 
-export default (filePath1, filePath2, format) => {
+export default (filePath1, filePath2, format = 'stylish') => {
   const minuend = getFileData(filePath1);
   const minuendExt = getFileType(getFullPath(filePath1));
   const minuendParsed = parser(minuend, minuendExt);
