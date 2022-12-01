@@ -31,7 +31,6 @@ const strBuilder = (data) => {
       result.push(`Property '${key}' was removed`);
     } else if (sym === upd) {
       const updValue = maybeValue;
-      console.log(maybeValue);
       result.push(`Property '${key}' was updated. From ${value} to ${updValue}`);
     }
   });
@@ -46,9 +45,6 @@ const generateKeyValueData = (data, base = '') => {
     }
     if (!_.isObject(value) && !Array.isArray(value)) {
       return [sym, complexKey, `${valueFormatter(value)}`, `${valueFormatter(maybeValue)}`];
-    }
-    if (value === null) {
-      return [sym, complexKey, 'null', `${valueFormatter(maybeValue)}`];
     }
     if (Array.isArray(value)) {
       const newValue = value;
