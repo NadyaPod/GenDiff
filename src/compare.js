@@ -24,9 +24,7 @@ const getFileType = (filePath) => {
 };
 
 export const diff = (minuend, subtrahend) => {
-  const keys1 = Object.keys(minuend);
-  const keys2 = Object.keys(subtrahend);
-  const keys = _.sortBy(_.union(keys1, keys2));
+  const keys = _.sortBy(_.union(Object.keys(minuend), Object.keys(subtrahend)));
 
   const difference = keys.map((key) => {
     if (!_.has(minuend, key)) {
