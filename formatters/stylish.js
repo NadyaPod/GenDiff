@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { plus, minus, upd } from '../src/symbols.js';
+/* eslint-disable */
 
 const unpack = (data) => {
   if (Array.isArray(data)) {
@@ -17,6 +18,7 @@ const unpack = (data) => {
 };
 
 const stylish = (packedData, replacer = ' ', spacesCount = 4, depth = 0) => {
+  console.dir(packedData, { depth: null });
   const data = unpack(packedData);
   const result = [];
 
