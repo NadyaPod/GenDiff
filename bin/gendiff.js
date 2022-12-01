@@ -13,11 +13,7 @@ program
   .argument('<filepath2>')
   .option('-f, --format <type>', 'output format', 'stylish')
   .action((filepath1, filepath2, opts) => {
-    try {
-      console.log(getDiff(filepath1, filepath2, opts.format));
-    } catch (error) {
-      console.error(error.message);
-    }
+    console.log(getDiff(filepath1, filepath2, opts.format));
   });
 
 program.parse();
