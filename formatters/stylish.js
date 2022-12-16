@@ -1,33 +1,26 @@
 import _ from 'lodash';
 import { plus, minus, upd } from '../src/symbols.js';
-/* eslint-disable */
 
 const unpack = (data) => {
   if (Array.isArray(data)) {
-    const newData = [];
-    data.forEach(([sym, key, value, maybeValue]) => {
-      if (sym === upd) {
-        newData.push([minus, key, value], [plus, key, maybeValue]);
-      } else {
-        newData.push([sym, key, value]);
-      }
-    });
-    return newData;
+    return data.flatMap(([sym, key, value, maybeValue]) => (
+      sym === upd
+        ? [[minus, key, value], [plus, key, maybeValue]]
+        : [[sym, key, value]]
+    ));
   }
   return data;
 };
 
 const stylish = (packedData, replacer = ' ', spacesCount = 4, depth = 0) => {
   const data = unpack(packedData);
-  const result = [];
 
-  if (Array.isArray(data)) {
-    data.forEach(([sym, key, value]) => result.push(`${replacer.repeat(spacesCount * depth)}  ${sym} ${key}: ${stylish(value, replacer, spacesCount, depth + 1)}`));
-  } else if (_.isObject(data)) {
-    Object.entries(data).forEach(([key, value]) => result.push(`${replacer.repeat(spacesCount * (depth + 1))}${key}: ${stylish(value, replacer, spacesCount, depth + 1)}`));
-  } else {
+  if (!_.isObject(data)) {
     return `${data}`;
   }
+  const result = Array.isArray(data)
+    ? data.map(([sym, key, value]) => `${replacer.repeat(spacesCount * depth)}  ${sym} ${key}: ${stylish(value, replacer, spacesCount, depth + 1)}`)
+    : Object.entries(data).map(([key, value]) => `${replacer.repeat(spacesCount * (depth + 1))}${key}: ${stylish(value, replacer, spacesCount, depth + 1)}`);
 
   return `{
 ${result.join('\n')}
