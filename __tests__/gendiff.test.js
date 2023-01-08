@@ -8,65 +8,20 @@ const __dirname = dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFixture = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
-test('json', () => {
-  const expected = readFixture('expected.txt');
-  const file1Path = getFixturePath('file1.json');
-  const file2Path = getFixturePath('file2.json');
-  const actual = generateDiff(file1Path, file2Path, 'stylish');
+describe.each([['stylish'], ['plain'], ['json']])('%s format-option', (format) => {
+  const expected = readFixture(`expected_${format}.txt`);
 
-  expect(actual).toEqual(expected);
-});
+  test.each([['json'], ['yaml']])('%s files', (ext) => {
+    const file1Path = getFixturePath(`file1.${ext}`);
+    const file2Path = getFixturePath(`file2.${ext}`);
+    const actual = generateDiff(file1Path, file2Path, format);
+    expect(actual).toEqual(expected);
+  });
 
-test('yaml', () => {
-  const expected = readFixture('expected.txt');
-  const file1Path = getFixturePath('file1.yml');
-  const file2Path = getFixturePath('file2.yaml');
-  const actual = generateDiff(file1Path, file2Path, 'stylish');
-
-  expect(actual).toEqual(expected);
-});
-
-test('json and yaml', () => {
-  const expected = readFixture('expected.txt');
-  const file1Path = getFixturePath('file1.json');
-  const file2Path = getFixturePath('file2.yaml');
-  const actual = generateDiff(file1Path, file2Path, 'stylish');
-
-  expect(actual).toEqual(expected);
-});
-
-test('json no plain', () => {
-  const expected = readFixture('expectedNP.txt');
-  const file1Path = getFixturePath('file3.json');
-  const file2Path = getFixturePath('file4.json');
-  const actual = generateDiff(file1Path, file2Path, 'stylish');
-
-  expect(actual).toEqual(expected);
-});
-
-test('yaml no plain', () => {
-  const expected = readFixture('expectedNP.txt');
-  const file1Path = getFixturePath('file3.yaml');
-  const file2Path = getFixturePath('file4.yml');
-  const actual = generateDiff(file1Path, file2Path, 'stylish');
-
-  expect(actual).toEqual(expected);
-});
-
-test('json plain formatter', () => {
-  const expected = readFixture('expectedPlain.txt');
-  const file1Path = getFixturePath('file3.json');
-  const file2Path = getFixturePath('file4.json');
-  const actual = generateDiff(file1Path, file2Path, 'plain');
-
-  expect(actual).toEqual(expected);
-});
-
-test('json formatter', () => {
-  const expected = readFixture('expectedFormatterJSON.txt');
-  const file1Path = getFixturePath('file3.json');
-  const file2Path = getFixturePath('file4.json');
-  const actual = generateDiff(file1Path, file2Path, 'json');
-
-  expect(actual).toEqual(expected);
+  test('misc files', () => {
+    const file1Path = getFixturePath('file1.json');
+    const file2Path = getFixturePath('file2.yaml');
+    const actual = generateDiff(file1Path, file2Path, format);
+    expect(actual).toEqual(expected);
+  });
 });
