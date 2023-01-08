@@ -5,7 +5,6 @@ export default (file, type) => {
     case 'json':
       return JSON.parse(file);
     case 'yaml':
-      return yaml.load(file);
     case 'yml':
       return yaml.load(file);
     default:

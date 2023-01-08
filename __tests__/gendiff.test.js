@@ -25,3 +25,19 @@ describe.each([['stylish'], ['plain'], ['json']])('%s format-option', (format) =
     expect(actual).toEqual(expected);
   });
 });
+
+test('unsupported formatter', () => {
+  const file1Path = getFixturePath('file1.json');
+  const file2Path = getFixturePath('file2.json');
+  expect(() => {
+    generateDiff(file1Path, file2Path, 'txt');
+  }).toThrow(Error);
+});
+
+test('unsupported file', () => {
+  const file1Path = getFixturePath('file1.json');
+  const file2Path = getFixturePath('fileUnsupported.html');
+  expect(() => {
+    generateDiff(file1Path, file2Path, 'stylish');
+  }).toThrow(Error);
+});
